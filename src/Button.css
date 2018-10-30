@@ -1,0 +1,17 @@
+.button {
+  width: 270px;
+  height: 270px;
+  background-color: black;
+  color: white;
+  float: left;
+  font-size: 200px;
+  margin: 15px 15px;
+  padding: 10px 0px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.active {
+	background-color: red;
+}
