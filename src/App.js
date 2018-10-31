@@ -12,28 +12,34 @@ function getRandomInt(min, max){
 class App extends Component {
 	state = { //state includes all the parts you want to update at some point
 		activeButton: 0,
-		buttonList: [],
 		clicks: 0,
 		showGameOver: false
 	}
 
+	//UI elements are not dependent on these
+	//that is why they don't need to be inside the Component's state
+	buttonList = [];
 	timerId = undefined;
 	delay = 1000;
 
 	handleClick = (btnId) => {
 		console.log("Click", btnId);
 
-		if(!(btnId === this.state.buttonList[0])) {
+		if(!(btnId === this.buttonList[0])) {
 			this.gameover();
 			return;
 		}
 
-		this.setState({
-			buttonList: this.state.buttonList.slice(1),
-			clicks: this.state.clicks + 1
-		});
-	}
+		this.buttonList = this.buttonList.slice(1);
 
+		this.setState(prevState => { //given a function as a parameter
+			return {
+			clicks: prevState.clicks + 1
+		};
+	});
+}
+
+	//gameover and next are not methods, they are attributes
 	gameover = () => {
 		clearTimeout(this.timerId);
 		this.setState({
@@ -41,31 +47,29 @@ class App extends Component {
 		});
 	}
 
-	//This and gameove = () is not a method, it is an attribute
 	//This function is bound because it's not a method
 	next = () => {
 		//check for game over
-		if(this.state.buttonList.length >= 10) {
+		if(this.buttonList.length >= 10) {
 			this.gameover();
 			return;
 		}
 		//pick next active Button
-		// let nextActive = 1 + (this.state.activeButton + 1) % 3;
 		let nextActive = undefined;
 		do {
 			nextActive = getRandomInt(1, 3);
 		} while (nextActive === this.state.activeButton);
 
-		let newList = this.state.buttonList;
+		let newList = this.buttonList;
 		newList.push(nextActive);
 
 		//update active button state
-		this.setState({ //parameter in setState is Javascript object
+		this.setState({ //parameters in setState are Javascript objects
 			activeButton: nextActive,
 			buttonList: newList
 		});
 
-		console.log(this.state.buttonList);
+		console.log(this.buttonList);
 
 		//set timer for next activation
 		this.delay *= 0.95;

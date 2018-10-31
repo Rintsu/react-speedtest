@@ -10,3 +10,16 @@ class Button extends Component {
 }
 
 export default Button;
+
+
+//NOTE: Can be also made with function since this component is stateless
+
+// import React from 'react';
+// import './Button.css';
+//
+// function Button(props){
+// 		return(
+// 			    <div className={ "button " + (props.active ? "active" : "") } onClick={props.clickHandler}>{props.label}</div>
+// 		);
+// }
+// export default Button;
